@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fermi–Pasta–Ulam–Tsingou Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>The Fermi&ndash;Pasta&ndash;Ulam&ndash;Tsingou problem</h1>
+    <p class="lede">A chain of masses on weakly nonlinear springs, set vibrating in a single pure tone &mdash; and the energy refuses to spread out the way statistical mechanics says it should.</p>
+    <p class="lede">Below is a live simulation of that chain, run with the same symplectic integrator and force law as the original Fortran model this page is built on.</p>
+    <div class="meta">chain of <span id="metaN">32</span> masses &middot; &alpha;&ndash;FPUT force law &middot; 4th-order Yoshida integrator</div>
+  </div>
+</header>
+
+<section class="sim">
+  <div class="wrap">
+    <div class="sim-grid">
+
+      <div>
+        <div class="panel">
+          <div class="panel-head">
+            <span>chain displacement &mdash; y(i, t)</span>
+            <span class="readout">t = <span id="timeReadout">0.000</span></span>
+          </div>
+          <canvas id="chainCanvas"></canvas>
+        </div>
+
+        <div class="panel chart-panel">
+          <div class="panel-head">
+            <span>energy by normal mode &mdash; E<sub>n</sub>(t)</span>
+            <span class="readout" id="thermalizedReadout">watching mode 1</span>
+          </div>
+          <canvas id="energyCanvas"></canvas>
+          <div class="legend" id="legend"></div>
+        </div>
+
+        <p class="caption">
+          The top strip is the chain itself: each dot is a mass, the connecting lines are springs, tinted by how stretched they are. The lower chart tracks how much energy sits in each of the first few normal (linear) modes over time. Start it in mode&nbsp;1 and watch energy leak into modes 2, 3, 4&hellip; then, unlike a generic nonlinear system, mostly come back.
+        </p>
+      </div>
+
+      <div class="panel controls">
+        <div class="panel-head"><span>parameters</span></div>
+        <div class="panel-body">
+
+          <div class="field">
+            <label>chain length (N) <span class="val" id="valN">32</span></label>
+            <input type="range" id="ctrlN" min="8" max="48" step="2" value="32">
+          </div>
+
+          <div class="field">
+            <label>nonlinearity (&alpha;) <span class="val" id="valAlpha">0.25</span></label>
+            <input type="range" id="ctrlAlpha" min="0" max="1" step="0.01" value="0.25">
+          </div>
+
+          <div class="field">
+            <label>initial mode <span class="val" id="valMode">1</span></label>
+            <input type="range" id="ctrlMode" min="1" max="6" step="1" value="1">
+          </div>
+
+          <div class="field">
+            <label>amplitude (A) <span class="val" id="valAmp">1.00</span></label>
+            <input type="range" id="ctrlAmp" min="0.2" max="2" step="0.05" value="1">
+          </div>
+
+          <div class="field">
+            <label>integrator order</label>
+            <select id="ctrlOrder">
+              <option value="1">1 &mdash; symplectic Euler</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" selected>4 &mdash; Yoshida composition</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>speed <span class="val" id="valSpeed">1&times;</span></label>
+            <input type="range" id="ctrlSpeed" min="1" max="6" step="1" value="2">
+          </div>
+
+          <div class="btn-row">
+            <button class="primary" id="btnRun">pause</button>
+            <button id="btnReset">reset</button>
+          </div>
+        </div>
+
+        <div class="stat-strip">
+          <div class="stat"><div class="k">period T</div><div class="v" id="statT">&mdash;</div></div>
+          <div class="stat"><div class="k">dt</div><div class="v" id="statDt">&mdash;</div></div>
+          <div class="stat"><div class="k">steps/frame</div><div class="v" id="statSteps">&mdash;</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap prose">
+    <h2>The FPUT Problem Explained</h2>
+    <p>
+      This simulation is a browser port of a Fortran FPUT solver: the same force law
+      &mdash; <strong>F = k(y&prime; + &alpha;y&prime;&sup2;)</strong>, a spring with a small quadratic correction &mdash;
+      and the same fourth-order Yoshida symplectic integrator, just running client-side instead of from
+      the command line. Excite the chain in a single low-frequency mode, watch the energy chart below it,
+      and you're watching the same recurrence Fermi, Pasta, Ulam, and Tsingou first saw on the MANIAC
+      computer in 1955: a nonlinear system that <em>should</em> drift toward equal energy in every mode,
+      but instead keeps almost returning to where it started.
+    </p>
+
+    <h3 class="remembrance">In Loving Memory of Mary Tsingou</h3>
+    <p>
+      <!-- Personalize this paragraph: who this is for, and why. -->
+      In the summer of 1953, Enrico Fermi, John Pasta, Stanislaw Ulma and Mary Tsingou set out to study the behavior of a chain of masses on weakly nonlinear springs. 
+      They published their results in a Los Alamos report in 1955. The resulting phenomenon, named the Fermi–Pasta–Ulam problem, notably ignored the contributions of Mary Tsingou.
+      However, in 2008, Thierry Dauxois published an article in Physics Today that highlighted her contributions to the problem.
+      Follwing this, the problem was renamed to the Fermi–Pasta–Ulam–Tsingou problem in her honor.
+
+      <br><br>
+
+      Mary Tsingou earned her undergradute degree from the University of Wisconsin and a Master's degree in Applied Mathematics from the University of Michigan.
+      In 1952, she joined the Los Alamos National Laboratory, where she dedicated her entire 35-year career.
+      Selected as one of the first programmers for the historic MANIAC computer, she spent her career solving complex problems in mathematics and applied physics.
+      During her time at Los Alamos, she made significant contributions to the FRUT promlem, the Star Wars program, and was a early expert in Fortran.
+      <br><br>
+      As one of the first people to use computers to study complex systems, and her work on the FRUT problem helped to lay the foundation for the field of chaos theory.
+      Today, we remember Mary Tsingou for her pioneering work in the field of nonlinear dynamics and her many contributions in computing.
+      This website is dedicated in her memory.
+
+      
+    </p>
+
+    <div class="photo-grid">
+      <div class="photo-slot photo-slot--1"></div>
+      <div class="photo-slot photo-slot--2"></div>
+      <div class="photo-slot photo-slot--3"></div> 
+    </div>
+    <p class="photo-note">Add Info on the Photos Here</p>
+
+    <p>
+      <!-- Personalize this paragraph: who this is for, and why. -->
+      MORE HERE
+    </p>
+  </div>
+</section>
+
+<section class="papers divider">
+  <div class="wrap">
+    <h2>Mary Tsingou publications</h2>
+    <ul class="biblio">
+      <li>
+        <div class="year">1972</div>
+        <div>
+          <div class="entry-title">The Superperiod of the Nonlinear Weighted String (FPU) Problem</div>
+          <div class="entry-meta">
+            Tuck &amp; Menzel (M.T. Menzel &mdash; Mary Tsingou) &middot; Advances in Mathematics 9, 399&ndash;407
+            <a href="https://www.sciencedirect.com/science/article/pii/0001870872900242?via%3Dihub" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="year">1958</div>
+        <div>
+          <div class="entry-title">On the Production of Heavy Uranium Isotopes in a Very High Density Fast Neutron Flux</div>
+          <div class="entry-meta">
+            Joseph J. Devaney, Albert G. Petschek, Mary Tsingou Menzel
+            <a href="https://books.google.com/books?id=toDTZwEACAAJ&q=mary+tsingou" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="papers">
+  <div class="wrap">
+    <h2>Further reading</h2>
+    <ul class="biblio">
+      <li>
+        <div class="year">1955</div>
+        <div>
+          <div class="entry-title">Studies of Nonlinear Problems I</div>
+          <div class="entry-meta">
+            Fermi, Pasta, Ulam &amp; Tsingou &middot; Los Alamos Report LA&#8209;1940
+            <a href="https://doi.org/10.2172/4376203" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="year">1965</div>
+        <div>
+          <div class="entry-title">Interaction of &ldquo;solitons&rdquo; in a collisionless plasma and the recurrence of initial states</div>
+          <div class="entry-meta">
+            Zabusky &amp; Kruskal &middot; Physical Review Letters 15, 240
+            <a href="https://doi.org/10.1103/PhysRevLett.15.240" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="year">2008</div>
+        <div>
+          <div class="entry-title">Fermi, Pasta, Ulam, and a mysterious lady</div>
+          <div class="entry-meta">
+            Thierry Dauxois &middot; Physics Today 61(1), 55&ndash;57
+            <a href="https://arxiv.org/abs/0801.1590" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">simulation engine ported from <a href="https://github.com/NotQuiteAwake/fort-fput" target="_blank" rel="noopener">NotQuiteAwake/fort-fput</a> (Fortran)</div>
+</footer>
+
+<script src="fput-engine.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
