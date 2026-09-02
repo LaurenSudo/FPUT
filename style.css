@@ -287,8 +287,8 @@ section.about p strong{ color: var(--text); font-weight: 600; }
 }
 /* Replace the background-image url() below with your own photo paths,
    e.g. background-image: url('photos/lab-setup.jpg');  */
-.photo-slot--1{ background-image: url('Mary_Tsingou_Joseph_Menzel.jpg'); }
-.photo-slot--2{ background-image: url('Mary_Tsingou-Menzel_at_Los_Alamos.jpg'); }
+.photo-slot--1{ background-image: url('photos/Mary_Tsingou_Joseph_Menzel.jpg'); }
+.photo-slot--2{ background-image: url('photos/Mary_Tsingou-Menzel_at_Los_Alamos.jpg'); }
 .photo-slot--3{ background-image: url(''); }
 
 .photo-note{
