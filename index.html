@@ -14,8 +14,9 @@
 <header class="hero">
   <div class="wrap">
     <h1>The Fermi&ndash;Pasta&ndash;Ulam&ndash;Tsingou Problem</h1>
-    <p class="lede">A chain of masses on weakly nonlinear springs, set vibrating in a single pure tone &mdash; and the energy refuses to spread out the way statistical mechanics says it should.</p>
-    <p class="lede">Below is a live simulation of that chain, run with the same symplectic integrator and force law as the original Fortran model this page is built on.</p>
+    <p class="lede">A chain of masses connected by weakly nonlinear springs is set vibrating in a single pure tone. According to statistical mechanics, the energy should gradually spread across the system&rsquo;s normal modes.</p>
+    <p class="lede"><strong>But it doesn&rsquo;t.</strong></p>
+    <p class="lede">Instead, the energy repeatedly flows back toward the mode where it started &mdash; producing a striking phenomenon known as Fermi&ndash;Pasta&ndash;Ulam&ndash;Tsingou recurrence.</p>
     <div class="meta">chain of <span id="metaN">32</span> masses &middot; &alpha;&ndash;FPUT force law &middot; 4th-order Yoshida integrator</div>
   </div>
 </header>
@@ -43,7 +44,13 @@
         </div>
 
         <p class="caption">
-          The top strip is the chain itself: each dot is a mass, the connecting lines are springs, tinted by how stretched they are. The lower chart tracks how much energy sits in each of the first few normal (linear) modes over time. Start it in mode&nbsp;1 and watch energy leak into modes 2, 3, 4&hellip; then, unlike a generic nonlinear system, mostly come back.
+          The top strip shows the chain itself: each dot represents a mass, and the connecting lines are springs, colored according to how much they stretch. The chart below tracks how the system&rsquo;s energy is distributed among the first six normal modes over time.
+        </p>
+        <p class="caption">
+          Start the simulation with all the energy in mode&nbsp;1. You&rsquo;ll see it gradually spread into modes 2, 3, 4, 5, and 6 but then, unlike what you might expect from a typical nonlinear system, much of that energy flows back into the original mode.
+        </p>
+        <p class="caption">
+          That repeated return is the characteristic FPUT recurrence.
         </p>
       </div>
 
@@ -105,20 +112,36 @@
 
 <section class="about" id="about">
   <div class="wrap prose">
-    <h2>The FPUT Problem Explained</h2>
+    <h2>The FPUT Experiment Explained</h2>
     <p>
-      This simulation is a browser port of a Fortran FPUT solver: the same force law
-      &mdash; <strong>F = k(y&prime; + &alpha;y&prime;&sup2;)</strong>, a spring with a small quadratic correction &mdash;
-      and the same fourth-order Yoshida symplectic integrator, just running client-side instead of from
-      the command line. Excite the chain in a single low-frequency mode, watch the energy chart below it,
-      and you're watching the same recurrence Fermi, Pasta, Ulam, and Tsingou first saw on the MANIAC
-      computer in 1955: a nonlinear system that <em>should</em> drift toward equal energy in every mode,
-      but instead keeps almost returning to where it started.
+      This interactive simulation is a browser port of a Fortran FPUT solver. It uses the same underlying
+      force law, <strong>F = k(y&prime; + &alpha;y&prime;&sup2;)</strong>, which adds a small quadratic
+      nonlinear correction to an otherwise ordinary spring.
     </p>
+    <p>
+      The simulation also uses the fourth-order Yoshida symplectic integrator, allowing the system to
+      evolve while preserving the Hamiltonian structure of the dynamics.
+    </p>
+    <p>
+      Start the chain in a single low-frequency normal mode and watch what happens: instead of settling
+      into an even distribution of energy, the system develops a pattern of transfers and recurrences
+      between its modes.
+    </p>
+    <p>
+      These are the same results that Fermi, Pasta, Ulam, and Tsingou encountered in 1955 while
+      running numerical experiments on the MANIAC computer.
+    </p>
+    <p>
+      What was expected to be a simple demonstration of thermalization became one of the foundational
+      surprises of nonlinear dynamics: a system can be nonlinear and still resist the march toward
+      equilibrium.
+      <br> Learn more about the FPUT problem here: <a href="https://en.wikipedia.org/wiki/Fermi%E2%80%93Pasta%E2%80%93Ulam%E2%80%93Tsingou_problem" target="_blank" rel="noopener">Fermi&ndash;Pasta&ndash;Ulam&ndash;Tsingou Problem Wikipedia</a>
+    </p>
+
 
     <h3 class="remembrance">In Loving Memory of Mary Tsingou</h3>
     <p>
-      <!-- Personalize this paragraph: who this is for, and why. -->
+      <!-- All about the queen herself -->
       In the summer of 1953, Enrico Fermi, John Pasta, Stanislaw Ulma and Mary Tsingou set out to study the behavior of a chain of masses on weakly nonlinear springs. 
       They published their results in a Los Alamos report in 1955. The resulting phenomenon, named the Fermi–Pasta–Ulam problem, notably ignored the contributions of Mary Tsingou.
       However, in 2008, Thierry Dauxois published an article in Physics Today that highlighted her contributions to the problem.
@@ -147,19 +170,19 @@
     <p class="photo-note">
        [1] Mary Tsingou Menzel and her husband, Joe Menzel, photographed in their Los Alamos home (2019)
        <br>[2] Tsingou-Menzel at the Los Alamos National Laboratory in 1955
-       <br>[3] Too sad to add this one
+       <br>[3] Mary (Tsingou) Menzel &mdash; <a href="https://losalamosreporter.com/2026/08/28/obituary-mary-tsingou-menzel-oct-14-1928-aug-27-2026/" target="_blank" rel="noopener">Los Alamos Reporter</a> (2026)
        <br>[4] The algorithm Mary Tsingou used to code the first numerical experiment.</p>
 
-    <p>
-      <!-- Personalize this paragraph: who this is for, and why. -->
-      MORE HERE
-    </p>
+    <blockquote class="quote">
+      <span class="quote-text">Here, now, we can do it forever, practically, and see what happens; whereas before it was limited by how much time you wanted to spend on it. Now you just put it in and a computer can do the same thing over and over again.</span>
+      <footer>&mdash; Mary Tsingou Menzel, <cite><a href="https://ethw.org/Oral-History:Mary_Tsingou_Menzel" target="_blank" rel="noopener">Oral History Interview</a></cite></footer>
+    </blockquote>
   </div>
 </section>
 
 <section class="papers divider">
   <div class="wrap">
-    <h2>Mary Tsingou publications</h2>
+    <h2>Mary Tsingou Publications</h2>
     <ul class="biblio">
       <li>
         <div class="year">1972</div>
@@ -167,7 +190,7 @@
           <div class="entry-title">The Superperiod of the Nonlinear Weighted String (FPU) Problem</div>
           <div class="entry-meta">
             Tuck &amp; Menzel (M.T. Menzel &mdash; Mary Tsingou) &middot; Advances in Mathematics 9, 399&ndash;407
-            <a href="https://www.sciencedirect.com/science/article/pii/0001870872900242?via%3Dihub" target="_blank" rel="noopener">read &rarr;</a>
+            <a href="https://seminariofisicamatematicauama.wordpress.com/wp-content/uploads/2013/10/tuck_and_menzel_superperiod_of_nonlinear_weighted_string_fpu_problem_advances-in-mathematics-9-399-407-1972-1-s2-0-0001870872900242-main.pdf" target="_blank" rel="noopener">read &rarr;</a>
           </div>
         </div>
       </li>
@@ -187,7 +210,7 @@
 
 <section class="papers">
   <div class="wrap">
-    <h2>Further reading</h2>
+    <h2>Further Reading</h2>
     <ul class="biblio">
       <li>
         <div class="year">1955</div>
@@ -219,12 +242,32 @@
           </div>
         </div>
       </li>
+      <li>
+        <div class="year">2026</div>
+        <div>
+          <div class="entry-title">The Science of Unpredictability</div>
+          <div class="entry-meta">
+            Kyle Dickman &middot; 1663 Magazine, Los Alamos National Laboratory
+            <a href="https://www.lanl.gov/media/publications/1663/science-of-unpredictability" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="year">2021</div>
+        <div>
+          <div class="entry-title">Understanding the FPU state in FPU-like models</div>
+          <div class="entry-meta">
+            Benettin &amp; Ponno &middot; Mathematics in Engineering 3(3), 1&ndash;22
+            <a href="http://aimspress.com/aimspress-data/mine/2021/3/PDF/mine-03-03-025.pdf" target="_blank" rel="noopener">read &rarr;</a>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">simulation engine ported from <a href="https://github.com/NotQuiteAwake/fort-fput" target="_blank" rel="noopener">NotQuiteAwake/fort-fput</a> (Fortran)</div>
+  <div class="wrap">Simulation engine ported from <a href="https://github.com/NotQuiteAwake/fort-fput" target="_blank" rel="noopener">NotQuiteAwake/fort-fput</a> (Fortran), released under an open-source license. In that same spirit, this site's code is open-source too. Meaning this site's code is free for anyone to read, use, and build upon.</div>
 </footer>
 
 <script src="fput-engine.js"></script>

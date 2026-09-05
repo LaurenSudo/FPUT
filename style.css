@@ -11,6 +11,7 @@
   --teal-dim: #c436eb;
   --amber: #b8477c;
   --amber-dim: #9E4770;
+  --pale-yellow: #e0d7b2;
   --serif: "Manrope", Georgia, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -256,6 +257,30 @@ section.about h3.remembrance{
 
 section.about p{ color: var(--text-dim); margin: 0 0 16px; }
 section.about p strong{ color: var(--text); font-weight: 600; }
+
+.quote{
+  position: relative;
+  margin: 32px 0;
+  padding: 4px 12px;
+  border: none;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--pale-yellow);
+}
+.quote-text::before{ content: "\201C"; }
+.quote-text::after{ content: "\201D"; }
+.quote footer{
+  display: inline;
+  margin-left: 6px;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+.quote footer cite{ font-style: normal; }
 
 .photo-grid{
   display:grid;
