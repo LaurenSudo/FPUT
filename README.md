@@ -1,10 +1,11 @@
 # The Fermi–Pasta–Ulam–Tsingou Problem
 
-An interactive visualization of the Fermi–Pasta–Ulam–Tsingou (FPUT) problem: a chain of masses on weakly nonlinear springs that, instead of thermalizing as statistical mechanics predicts, keeps recurring back toward its initial mode.
+This repository hosts an interactive visualization of the Fermi–Pasta–Ulam–Tsingou (FPUT) problem: a chain of masses on weakly nonlinear springs that, instead of thermalizing as statistical mechanics predicts, keeps recurring back toward its initial mode.
 
+It was built by porting the original [fort-fput](https://github.com/NotQuiteAwake/fort-fput) Fortran program to JavaScript.
 The page simulates the chain live in the browser, plots the displacement of each mass over time, and breaks the energy down by normal mode so you can watch the recurrence happen.
 
-The site also includes a short remembrance of Mary Tsingou, whose contributions to the original 1955 study were long uncredited, along with photos and a list of her publications.
+This site was created to honor and in remembrance of Mary Tsingou, whose contributions to the original 1955 study were long uncredited. In her spirit of advancing science openly, this project is released as open source, building on the original [fort-fput](https://github.com/NotQuiteAwake/fort-fput) repository, and includes photos and a list of her publications.
 
 ## Running it
 
@@ -21,3 +22,4 @@ npx serve .
 - `app.js` — UI wiring, canvas rendering, and charts
 - `fput-engine.js` — the physics: the chain's equations of motion, integrated with a 4th-order Yoshida integrator
 - `photos/` — images used in the Mary Tsingou remembrance section
+- `papers/` — local PDFs for the Mary Tsingou Publications and Further Reading sections
